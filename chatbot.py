@@ -3,7 +3,7 @@ import config
 
 
 def get_response(conversation_history):
-    messages = [{"role":"system", "content": config.SystemPrompt}] + conversation_history
+    messages = [{"role":"system", "content": config.SYSTEM_PROMPT}] + conversation_history
     response = ollama.chat(model = config.Model, messages = messages)
     return response["message"]["content"]
 
