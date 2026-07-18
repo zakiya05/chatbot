@@ -4,22 +4,23 @@ import config
 
 def get_response(conversation_history):
     messages = [{"role":"system", "content": config.SYSTEM_PROMPT}] + conversation_history
-    response = ollama.chat(model = config.Model, messages = messages)
+    response = ollama.chat(model = config.MODEL, messages = messages)
     return response["message"]["content"]
 
 
 
 def main():
-    print(f"The model config is:{config.Model}")
+    print(f"The model config is:{config.MODEL}")
     conversation_history = []
     while True:
         user_input = input("You:").strip()
         if user_input.lower() in ("quit", "exit"):
-            print("Great chatting with you! See you")
+            print("Great chatting with you! Bye!")
             break
         if not user_input:
             continue
         conversation_history.append({"role": "user", "content": user_input})
+        print("conversation history is: ------", conversation_history)
         try:
             reply = get_response(conversation_history)
         except Exception as e:
