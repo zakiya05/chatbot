@@ -14,7 +14,20 @@ def load_pdf_text(pdf_path):
     return "\n".join(pages_text), len(pages_text)
 
 def chunk_text(text, chunk_size, chunk_overlap):
-    return []
+    chunks = []
+    start = 0 
+    while start <len(text):
+        end = start + chunk_size
+        chunks.append(text[start:end])
+        start  =  end - chunk_overlap
+        if start <= 0:
+            break
+
+    return [c.strip() for c in chunks if c.strip()]
+
+def embed_text(text):
+    response = ollama.embeddings(model = config.EMBEDDING_MODEL, prompt = text)
+    return response["embedding"]
 
 
 def main():
@@ -29,9 +42,21 @@ def main():
         print("Empty pdf or unable to extract")
         sys.exit(1)
 
-    # chunking code 
 
     chunks = chunk_text(full_text, config.CHUNK_SIZE, config.CHUNK_OVERLAP)
+
+    client = chromadb.PersistentClient(path = config.VECTOR_DB)
+    collection = client.get_or_create_collection(name = config.COLLECTION_NAME)
+
+    for i, chunk in enumerate(chunks):
+        embedding = embed_text(chunk)
+        collection.add(ids=[f"{pdf_path}-{i}"], 
+                        embedding = [embedding], 
+                        documents = [chunk],
+                        metadatas = [{"source": pdf_path, "chunk_index": i}])
+    print("Done with embedding and storing")
+    print(f"Collection has {collection.count()} chunks")
+
 
 
 
