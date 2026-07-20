@@ -2,26 +2,31 @@
 
 ### Prerequisites
 
--- tinyllama or API key 
+- Python 3.9+
+- [Ollama](https://ollama.com) installed and running
 
-### Run Locally 
-Dependencies:
-Step 1 : Run these on your terminal 
--- pip install -r requirements.txt 
--- ollama run tinyllama
--- ollama pull nomic-embed-text
+### Setup
 
-Step 2: in the folder 
+Step 1: Install dependencies and pull the models
+```
+pip install -r requirements.txt
+ollama pull tinyllama
+ollama pull nomic-embed-text
+```
 
--- python3 chatbot.py
+Step 2: Ingest a document (do this before chatting, so answers are grounded in it)
+```
+python ingest.py path/to/your/document.pdf
+```
 
-To exit the chat just type exit or end 
+Step 3 (optional): Sanity-check that retrieval works
+```
+python test_search.py "a question about the document"
+```
 
-### for document chucking 
--- python ingest.py path/
+Step 4: Chat
+```
+python3 chatbot.py
+```
 
-### for testing the doument chuck 
--- python test_search.py "question on the document"
-
-
-
+To exit the chat, type `quit` or `exit`.
