@@ -17,12 +17,11 @@ Step 2: in the folder
 
 To exit the chat just type exit or end 
 
-# for document chucking 
+### for document chucking 
 -- python ingest.py path/
 
-# for testing the doument chuck 
+### for testing the doument chuck 
 -- python test_search.py "question on the document"
-
 
 
 

@@ -16,3 +16,5 @@ COLLECTION_NAME = "documents_collection"
 # Chunking parameters - change
 CHUNK_SIZE = 500 
 CHUNK_OVERLAP = 50
+
+TOP_K = 3 
