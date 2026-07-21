@@ -21,8 +21,7 @@ def main():
     ):
         print(f"Match {i + 1} (distance: {distance:.4f}) ---")
        
-        print(doc[:300] + ("..." if len(doc) > 300 else ""))
-        print()
+        print(doc[:300] + ("..." if len(doc) > 300 else ""),"\n")
 
 
     
